@@ -23,12 +23,15 @@ const usersSlice = createSlice({
             state.registerLoading = false;
             state.registerError = null;
         },
-        registerUserFailure(state, action) {
+        registerUserFailure(state, {payload: error}) {
             state.registerLoading = false;
-            state.registerError = action.payload;
+            state.registerError = error;
         },
         facebookUserRequest(state, action) {
-
+            state.loginLoading = true;
+        },
+        googleUserRequest(state, action) {
+            state.loginLoading = false;
         },
         loginUserRequest(state, action) {
             state.loginLoading = true;
@@ -42,12 +45,19 @@ const usersSlice = createSlice({
             state.loginError = action.payload;
             state.loginLoading = false;
         },
+        logoutUserRequest(state, action) {
+
+        },
         logoutUser(state, action) {
             state.user = null;
             state.avatar = null;
         },
         avatarUser(state, action) {
           state.avatar = action.payload;
+        },
+        clearErrorUser(state, action) {
+            state.registerError = null;
+            state.loginError = null
         },
     }
 });

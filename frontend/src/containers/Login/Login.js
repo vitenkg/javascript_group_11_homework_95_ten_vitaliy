@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Avatar, Container, Grid, Link, makeStyles, Typography} from "@material-ui/core";
 import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
+import {clearErrorUser, loginUserRequest} from "../../store/actions/usersActions";
 import FormElement from "../../components/Form/FormElement";
 import {Link as RouterLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import ButtonWithProgress from "../../components/UI/AppToolbar/ButtonWithProgress/ButtonWithProgress";
 import FacebookLogin from "../../components/UI/FacebookLogin/FacebookLogin";
-import {loginUserRequest} from "../../store/actions/usersActions";
+import GoogleLogin from "../../components/UI/GoogleLogin/GoogleLogin";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -41,6 +42,12 @@ const Login = () => {
         email: '',
         password: '',
     });
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearErrorUser());
+        };
+    }, [dispatch]);
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;
@@ -76,7 +83,7 @@ const Login = () => {
                 >
                     <FormElement
                         type="text"
-                        autoComlete="new-email"
+                        autoComlete="current-email"
                         label="Email"
                         name="email"
                         value={user.email}
@@ -85,7 +92,7 @@ const Login = () => {
 
                     <FormElement
                         type="password"
-                        autoComlete="NEW-username"
+                        autoComlete="current-username"
                         label="Password"
                         name="password"
                         value={user.password}
@@ -108,6 +115,10 @@ const Login = () => {
 
                     <Grid item xs={12}>
                         <FacebookLogin/>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <GoogleLogin/>
                     </Grid>
 
                     <Grid item container justifyContent="flex-end">

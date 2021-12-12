@@ -5,9 +5,12 @@ export const {
     registerUserSuccess,
     registerUserFailure,
     facebookUserRequest,
+    googleUserRequest,
     loginUserRequest,
     loginUserSuccess,
     loginUserFailure,
     avatarUser,
+    logoutUserRequest,
     logoutUser,
+    clearErrorUser,
 } = usersSlice.actions;

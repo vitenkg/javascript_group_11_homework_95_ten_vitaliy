@@ -10,8 +10,7 @@ const FacebookLogin = () => {
     const dispatch = useDispatch();
 
     const facebookResponse = response => {
-        console.log(response);
-        dispatch(facebookUserRequest(response.payload));
+        dispatch(facebookUserRequest(response));
     };
 
     return (

@@ -1,12 +1,29 @@
-import {Grid, TextField} from "@material-ui/core";
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Grid, MenuItem, TextField} from "@material-ui/core";
 
-const FormElement = ({label, name, value, onChange, required, error, autoComplete, type}) => {
+const FormElement = ({label, name, value, onChange, required, error, autoComplete, type, select, options, multiline, rows}) => {
+    let inputChildren = null;
+
+    if (select) {
+        inputChildren = options.map(option => (
+            <MenuItem
+                key={option._id}
+                value={option._id}
+            >
+                {option.title}
+            </MenuItem>
+        ));
+    }
+
     return (
         <Grid item xs={12}>
             <TextField
+                select={select}
+                multiline={multiline}
+                rows={rows}
                 type={type}
+                required={required}
                 autoComplete={autoComplete}
                 label={label}
                 name={name}
@@ -14,19 +31,26 @@ const FormElement = ({label, name, value, onChange, required, error, autoComplet
                 onChange={onChange}
                 error={Boolean(error)}
                 helperText={error}
-            />
+            >
+                {inputChildren}
+            </TextField>
         </Grid>
     );
 };
 
-FormElement.propsType = {
-    label: PropTypes.string.isRequares,
-    name: PropTypes.string.isRequares,
-    value: PropTypes.any.isRequares,
-    onChange: PropTypes.func.isRequares,
+FormElement.propTypes = {
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.any.isRequired,
+    onChange: PropTypes.func.isRequired,
     required: PropTypes.bool,
     error: PropTypes.string,
-
+    autoComplete: PropTypes.string,
+    type: PropTypes.string,
+    select: PropTypes.bool,
+    options: PropTypes.arrayOf(PropTypes.object),
+    multiline: PropTypes.bool,
+    rows: PropTypes.number
 };
 
 export default FormElement;

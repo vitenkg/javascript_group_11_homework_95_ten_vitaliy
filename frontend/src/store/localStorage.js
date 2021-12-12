@@ -1,7 +1,9 @@
+import {localStorageName} from "../config";
+
 export const saveToLocalStorage = state => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('shopState', serializedState);
+    localStorage.setItem(localStorageName, serializedState);
   } catch (e) {
     console.log('Could not save state');
   }
@@ -9,7 +11,7 @@ export const saveToLocalStorage = state => {
 
 export const loadFromLocalStorage = () => {
   try {
-    const serializedState = localStorage.getItem('shopState');
+    const serializedState = localStorage.getItem(localStorageName);
 
     if (serializedState === null) {
       return undefined;
