@@ -2,7 +2,7 @@ const path = require('path');
 
 const rootPath = __dirname;
 
-const dataBaseName = 'HW94';
+const dataBaseName = 'HW95';
 
 module.exports = {
     rootPath,
