@@ -51,7 +51,6 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const params = (req.params.id).slice(1);
-    console.log('params: ', params);
     try {
         const cocktail = await Cocktail.findOne({_id: params})
                 .populate('user', 'displayName');
@@ -90,8 +89,6 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
 });
 
 router.post('/activate', auth, async (req, res) => {
-    console.log('id', req.body.id);
-    // console.log(req.user);
     try {
         if (req.user.role === 'admin') {
             const response = await

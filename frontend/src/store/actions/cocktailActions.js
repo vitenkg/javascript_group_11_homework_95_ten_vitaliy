@@ -61,8 +61,6 @@ export const fetchCocktails = (user) => {
                 response = await axiosApi.get('/cocktails');
             }
 
-
-            console.log(response.data);
             dispatch (fetchCocktailsSuccess(response.data));
         } catch (e) {
             dispatch(fetchCocktailsFailure(e));
