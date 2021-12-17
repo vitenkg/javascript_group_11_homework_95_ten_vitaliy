@@ -12,9 +12,11 @@ const RatingSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    type: Number,
-    min: 1,
-    max: 5,
+    mark: {
+        type: Number,
+        min: 1,
+        max: 5,
+    }
 });
 
 const CocktailSchema = new mongoose.Schema({
@@ -44,6 +46,6 @@ const CocktailSchema = new mongoose.Schema({
 
 CocktailSchema.plugin(idvalidator);
 
-const Event = mongoose.model('Event', CocktailSchema);
+const Event = mongoose.model('Cocktail', CocktailSchema);
 
 module.exports = Event;

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const exitHook = require('async-exit-hook');
 const config = require('./config');
 const Users = require('./app/users');
+const Cocktail = require('./app/cocktails');
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use(express.static('public'));
 const port = 8000;
 
 app.use('/users', Users);
+app.use('/cocktails' , Cocktail);
 
 
 const run = async () => {

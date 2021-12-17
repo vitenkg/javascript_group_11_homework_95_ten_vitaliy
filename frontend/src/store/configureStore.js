@@ -7,9 +7,11 @@ import {configureStore} from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import {rootSagas} from "./rootSagas";
 import usersSlice from "./slices/usersSlice";
+import cocktailsReducer from "./reducers/cocktailsReducers";
 
 const rootReducer = combineReducers({
   'users': usersSlice.reducer,
+  'cocktails': cocktailsReducer,
 });
 
 const persistedState = loadFromLocalStorage();

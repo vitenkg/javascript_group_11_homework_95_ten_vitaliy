@@ -30,7 +30,7 @@ const AppToolbar = () => {
         <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center">
             <Typography variant="h6">
-              <Link to="/" className={classes.mainLink}>Calendar</Link>
+              <Link to="/" className={classes.mainLink}>Cocktail</Link>
             </Typography>
             <Grid>
               {

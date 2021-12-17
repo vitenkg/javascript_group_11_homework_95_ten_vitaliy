@@ -2,7 +2,6 @@ const express = require("express");
 const User = require('../models/User');
 const Cocktail = require('../models/Cocktail');
 const config = require('../config');
-const axios = require("axios");
 const {nanoid} = require("nanoid");
 const multer = require("multer");
 const path = require("path");
@@ -21,29 +20,50 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     let cocktails = [];
+    const query = req.query.token;
     try {
-        if (req.user.role === 'user')
-            cocktails = await Cocktail.find(
-                {
-                    $end: [
-                        {publish: true},
-                        {user: req.user._id}
-                    ]
-                });
+        const user = await User.findOne({token: query});
+        console.log(user);
+        if (!user) {
+            cocktails = await Cocktail.find({publish: true})
+                .populate('user', 'displayName')
+                .sort('name');
+        } else {
+            if (user.role === 'user')
+                cocktails = await Cocktail.find(
+                    {
+                        $or: [
+                            {publish: true},
+                            {user: user._id}
+                        ]
+                    })
+                    .populate('user', 'displayName');
 
-        if (req.user.role === 'admin')
-            cocktails = await Cocktail.find();
-
+            if (user.role === 'admin')
+                cocktails = await Cocktail.find();
+        }
         res.send(cocktails);
     } catch (e) {
         console.log(e);
     }
 });
 
-router.post('/', auth, upload.single('image'), async (req, res) => {
+router.get('/:id', async (req, res) => {
+    const params = (req.params.id).slice(1);
+    console.log('params: ', params);
+    try {
+        const cocktail = await Cocktail.findOne({_id: params})
+                .populate('user', 'displayName');
+        console.log('cocktail: ', cocktail)
+        res.send(cocktail);
+    } catch (e) {
+        console.log(e);
+    }
+});
 
+router.post('/', auth, upload.single('image'), async (req, res) => {
     if (!req.body.name || !req.body.recipe || !req.body.ingredients) {
         return res.status(400).send({error: 'Data No Valid'});
     }
@@ -51,8 +71,8 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
     const cocktailData = {
         name: req.body.name,
         recipe: req.body.recipe,
-        ingredients: req.body.ingredients,
-        user:req.user._id,
+        ingredients: JSON.parse(req.body.ingredients),
+        user: req.user._id,
         rating: req.body.rating || null
     }
 
@@ -63,10 +83,10 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
     const cocktail = new Cocktail(cocktailData);
 
     try {
-        cocktail.generateToken();
         await cocktail.save();
         res.send(cocktail);
     } catch (e) {
+        console.log(e);
         res.status(400).send(e);
     }
 });
@@ -88,7 +108,7 @@ router.delete('/:id', auth, async (req, res) => {
             });
 
         if (req.user.role === 'admin')
-            await Cocktail.findOneAndDelete(req.params.id, error=> {
+            await Cocktail.findOneAndDelete(req.params.id, error => {
                 if (error) {
                     return res.status(401).send({error: 'Cocktail Not found'});
                 } else {

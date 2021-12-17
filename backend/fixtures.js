@@ -43,7 +43,11 @@ const run = async () => {
                 amount: 'qq',
             }],
             publish: false,
-        },{
+            rating: [{
+                mark: 1,
+                user: test,
+            }]
+        }, {
             name: '1-w',
             recipe: 'qwerty',
             user: test,
@@ -52,7 +56,11 @@ const run = async () => {
                 amount: 'ww',
             }],
             publish: false,
-        },{
+            rating: [{
+                mark: 1,
+                user: test,
+            }],
+        }, {
             name: '1-e',
             recipe: 'qwerty',
             user: test1,
@@ -60,7 +68,11 @@ const run = async () => {
                 title: '1-ee',
                 amount: 'ee',
             }],
-            publish: false,
+            publish: true,
+            rating: [{
+                mark: 1,
+                user: test,
+            }]
         },
     );
 
