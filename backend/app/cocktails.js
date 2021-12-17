@@ -25,7 +25,6 @@ router.get('/', async (req, res) => {
     const query = req.query.token;
     try {
         const user = await User.findOne({token: query});
-        console.log(user);
         if (!user) {
             cocktails = await Cocktail.find({publish: true})
                 .populate('user', 'displayName')
@@ -56,7 +55,6 @@ router.get('/:id', async (req, res) => {
     try {
         const cocktail = await Cocktail.findOne({_id: params})
                 .populate('user', 'displayName');
-        console.log('cocktail: ', cocktail)
         res.send(cocktail);
     } catch (e) {
         console.log(e);
@@ -88,6 +86,31 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
     } catch (e) {
         console.log(e);
         res.status(400).send(e);
+    }
+});
+
+router.post('/activate', auth, async (req, res) => {
+    console.log('id', req.body.id);
+    // console.log(req.user);
+    try {
+        if (req.user.role === 'admin') {
+            const response = await
+            Cocktail.findByIdAndUpdate(req.body.id, { publish: true },
+                function (err, docs) {
+                    if (err){
+                        console.log(err);
+                        res.status(401).send({error: 'Something wrong'});
+                    }
+                    else{
+                        res.send({message: "Updated User: "});
+                    }
+                });
+        } else {
+            return res.status(404).send('Permission denied');
+        }
+        res.send({message: 'Activate is Successfully'});
+    } catch (e) {
+        console.log(e);
     }
 });
 

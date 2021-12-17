@@ -37,7 +37,7 @@ const MainPage = () => {
 
                     {user && (
                         <Grid item>
-                            <Button coloe="primary" component={Link} to="/cocktail/new">Add</Button>
+                            <Button color="primary" component={Link} to="/cocktail/new">Add</Button>
                         </Grid>
                     )}
                 </Grid>
