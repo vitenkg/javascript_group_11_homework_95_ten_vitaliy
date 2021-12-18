@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Box, Button, Grid, makeStyles, TextField, Typography} from "@material-ui/core";
 import FormElement from "../../components/Form/FormElement";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {createCocktail} from "../../store/actions/cocktailActions";
 
@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
 const AddIngredients = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const error = useSelector(state => state.cocktails.createError);
     const [ingredients, setIngredients] = useState([{
         title: '',
         amount: '',

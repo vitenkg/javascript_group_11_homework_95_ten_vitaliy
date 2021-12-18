@@ -24,7 +24,7 @@ const MainPage = () => {
     const cocktails = useSelector(state => state.cocktails.cocktails);
 
     useEffect(() => {
-        dispatch(fetchCocktails(user.token || null));
+        dispatch(fetchCocktails(user && user.token || null));
     }, [dispatch, user]);
 
     return (
