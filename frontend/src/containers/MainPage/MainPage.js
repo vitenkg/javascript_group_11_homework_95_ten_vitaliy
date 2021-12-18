@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import CocktailsLayout from "../../components/CocktailsLayout/CocktailsLayout";
 import CocktailItem from "../../components/CocktailItem/CocktailItem";
 
+
 const useStyles = makeStyles(theme => ({
     title: {
         [theme.breakpoints.down('xs')]: {
@@ -23,7 +24,7 @@ const MainPage = () => {
     const cocktails = useSelector(state => state.cocktails.cocktails);
 
     useEffect(() => {
-        dispatch(fetchCocktails(user && user.token || null));
+        dispatch(fetchCocktails(user.token || null));
     }, [dispatch, user]);
 
     return (

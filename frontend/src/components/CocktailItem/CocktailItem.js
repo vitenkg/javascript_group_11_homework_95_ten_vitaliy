@@ -13,6 +13,8 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import {apiURL} from "../../config";
+import noImageFile from '../../assets/images/2048px-No_image_available.svg.png';
+
 
 const useStyles = makeStyles({
     card: {
@@ -27,10 +29,10 @@ const useStyles = makeStyles({
 const CocktailItem = ({name, recipe, id, image}) => {
     const classes = useStyles();
 
-    let cardImage = null;
+    let cardImage = noImageFile;
 
     if (image) {
-        cardImage = apiURL + '/' + image;
+        cardImage = apiURL + '/uploads/' + image;
     }
 
     return (

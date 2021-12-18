@@ -1,4 +1,5 @@
 import {
+    CREATE_COCKTAIL_FAILURE, CREATE_COCKTAIL_REQUEST,
     FETCH_COCKTAIL_FAILURE,
     FETCH_COCKTAIL_REQUEST, FETCH_COCKTAIL_SUCCESS,
     FETCH_COCKTAILS_FAILURE,
@@ -10,6 +11,7 @@ const initialState = {
     fetchLoading: false,
     cocktails: [],
     cocktail: null,
+    createError: null
 };
 
 const cocktailsReducer = (state = initialState, action) => {
@@ -27,6 +29,10 @@ const cocktailsReducer = (state = initialState, action) => {
             return {...state,  fetchLoading: false, cocktail: payload};
         case FETCH_COCKTAIL_FAILURE:
             return {...state, fetchLoading: false};
+        case CREATE_COCKTAIL_REQUEST:
+            return {...state, createError: null};
+        case CREATE_COCKTAIL_FAILURE:
+            return {...state, createError: payload};
         case ON_ACTIVATE_REQUEST:
             return {...state, fetchLoading: true};
         case ON_ACTIVATE_SUCCESS:
